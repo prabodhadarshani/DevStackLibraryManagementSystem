@@ -104,11 +104,56 @@ public class Main {
                     LibraryItem createMagazine = new Magazine(magazineNameStr,magazineAuthorStr,magazineSerialNumberStr);
                     library.addItem(createMagazine);
                 }
+                // new added code changes Prabodha
+            }else if (mainOptionStr == 2) {
+                System.out.println("Please enter the User name you want to create");
+                String userNameStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                User createUser = new User(userNameStr);
+                library.addUser(createUser);
 
-            } else if (mainOptionStr == 5) {
+            } else if (mainOptionStr == 3) {
+                System.out.println("Which User Name is going to the buy item?");
+
+                List<User> userList = library.getUserList(); //  returns a list of users
+                int i;
+                for ( i = 0; i < userList.size(); i++) {
+                    System.out.println((i + 0) + ". " + userList.get(i).getName());
+                }
+
+                String userNameStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                System.out.println("What is the serial  item of Number?");
+                String userNameserialStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+
+                User getUser = new User(userNameStr);
+                String getUserName = getUser.getName();
+                library.borrowItem(userNameserialStr, getUser);
+
+            }else if (mainOptionStr == 4) {
+                System.out.println("Which User is going to the return the item?");
+
+                List<User> userList = library.getUserList(); //  returns a list of users
+                int i;
+                for ( i = 0; i < userList.size(); i++) {
+                    System.out.println((i + 0) + ". " + userList.get(i).getName());
+                }
+
+                String userNameStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                System.out.println("What is the serial  item of Number?");
+                String userNameserialStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+
+                User getUser = new User(userNameStr);
+                library.returnBorrowedItem(userNameserialStr, getUser);
+
+                System.out.println("Item is sucessfully return");
+
+            }
+
+            else if (mainOptionStr == 5) {
                 exit = true;
             }
         }
         LibraryIO.saveItemToFile(library.getLibraryItems(),"itemlist.lms");
+        LibraryIO.saveUserListToFile(library.getUserList(),"userlist.lms");
+        LibraryIO.saveBorrowedItemsToFile(library.getBorrowedItems(),"borrowedItems.lms");
     }
 }
